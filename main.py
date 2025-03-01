@@ -36,7 +36,7 @@ class HeartDiseaseInput(BaseModel):
 
 # API สำหรับทำนาย
 @app.post("/predict/")
-def predict(data: HeartDiseaseInput):
+async def predict(data: HeartDiseaseInput):
     # แปลงข้อมูลเป็น NumPy Array
     input_data = np.array([[data.Age, data.Sex, data.ChestPainType, data.RestingBP, 
                             data.Cholesterol, data.FastingBS, data.RestingECG, 
