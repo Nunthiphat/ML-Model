@@ -46,3 +46,7 @@ async def predict(data: HeartDiseaseInput):
     prediction = model.predict(input_data)
     
     return {"prediction": int(prediction[0])}
+
+@app.get("/test/")
+async def test():
+    return {"message": "Hello World"}
