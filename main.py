@@ -2,17 +2,17 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
 import numpy as np
-# from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],  # อนุญาตทุกโดเมน (*)
-#     allow_credentials=True,
-#     allow_methods=["*"],  # อนุญาตทุก HTTP method (GET, POST, PUT, DELETE)
-#     allow_headers=["*"],  # อนุญาตทุก header
-# )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # อนุญาตทุกโดเมน (*)
+    allow_credentials=True,
+    allow_methods=["*"],  # อนุญาตทุก HTTP method (GET, POST, PUT, DELETE)
+    allow_headers=["*"],  # อนุญาตทุก header
+)
 
 # โหลดโมเดล
 model = joblib.load("new_random_forest_model.pkl")
@@ -36,7 +36,7 @@ class HeartDiseaseInput(BaseModel):
 
 # API สำหรับทำนาย
 @app.post("/predict/")
-def predict(data: HeartDiseaseInput):
+async def predict(data: HeartDiseaseInput):
     # แปลงข้อมูลเป็น NumPy Array
     input_data = np.array([[data.Age, data.Sex, data.ChestPainType, data.RestingBP, 
                             data.Cholesterol, data.FastingBS, data.RestingECG, 
