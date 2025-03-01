@@ -2,6 +2,17 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
 import numpy as np
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # อนุญาตทุกโดเมน (*)
+    allow_credentials=True,
+    allow_methods=["*"],  # อนุญาตทุก HTTP method (GET, POST, PUT, DELETE)
+    allow_headers=["*"],  # อนุญาตทุก header
+)
 
 # โหลดโมเดล
 model = joblib.load("new_random_forest_model.pkl")
